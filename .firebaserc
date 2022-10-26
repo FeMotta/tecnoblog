@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fire-tecnoblog": {
+      "hosting": {
+        "tecnoblog": [
+          "fire-tecnoblog"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fire-tecnoblog"
+  }
+}
