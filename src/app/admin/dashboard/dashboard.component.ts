@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/shared/database/firestore.service';
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class BlogComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   noticias: Observable<any> = new Observable<any>();
 
@@ -15,6 +15,11 @@ export class BlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.noticias = this.firestoreService.getNoticias();
+    console.log(this.noticias);
+  }
+
+  deleta(id: string) {
+    this.firestoreService.deleteNoticia(id);
   }
 
 }

@@ -1,0 +1,94 @@
+<body class="toggle-sidebar">
+
+  <!-- ======= Header ======= -->
+
+  <main id="main" class="main mt-0">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashboard">Admin</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a href="admin/noticia"><button class="btn btn-primary me-4">Adicionar </button></a>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Noticias <span>| Hoje</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Editar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let noticia of noticias | async">
+                        <td>{{ noticia.titulo }}</td>
+                        <td>
+                          <div class="btn-group">
+                            <button class="btn btn-primary">Editar</button>
+                            <button class="btn btn-danger" (click)="deleta(noticia.id)">Remover</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+          <!-- News & Updates Traffic -->
+          <div class="card">
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">Noticias  <span>| Today</span></h5>
+
+              <div class="news mb-3">
+
+                <div class="post-item clearfix"  *ngFor="let noticia of noticias | async">
+                  <img [src]="noticia.imagem" alt="">
+                  <h4><a [routerLink]="['/admin/noticia', noticia.id]">{{ noticia.titulo }}</a></h4>
+                  <p>{{ noticia.descricao }}</p>
+                </div>
+
+              </div><!-- End sidebar recent posts-->
+
+            </div>
+          </div><!-- End News & Updates -->
+
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
