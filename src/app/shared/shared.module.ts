@@ -5,18 +5,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { HeaderComponent } from './header/header.component';
 import { AdmMenuComponent } from './adm-menu/adm-menu.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    AdmMenuComponent
+    AdmMenuComponent,
+    FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     HeaderComponent,
     AdmMenuComponent,
+    FooterComponent,
     FormsModule,
     BrowserModule,
     CommonModule,
