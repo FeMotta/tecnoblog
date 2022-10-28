@@ -12,6 +12,7 @@
         <li><a href="/home" id="home" [ngClass]="{'active': windowLocation == '/home'}">Home</a></li>
         <li><a href="/sobre" id="about" [ngClass]="{'active': windowLocation == '/sobre'}">Sobre Nós</a></li>
         <li><a href="/blog" id="blog" [ngClass]="{'active': windowLocation == '/blog'}">Blog</a></li>
+        <li *ngIf="logado"><a href="/home" id="logout" (click)="deslogar()">Logout</a></li>
       </ul>
     </nav>
 
