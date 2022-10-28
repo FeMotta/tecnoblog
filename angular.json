@@ -34,6 +34,7 @@
               "src/assets/vendor/remixicon/remixicon.css",
               "src/assets/vendor/quill/quill.snow.css",
               "src/assets/vendor/quill/quill.bubble.css",
+              "src/assets/vendor/quill/quill.core.css",
               "src/assets/vendor/boxicons/css/boxicons.min.css"
             ],
             "scripts": [
