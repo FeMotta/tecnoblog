@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { EditorChangeContent, EditorChangeSelection, QuillViewComponent } from 'ngx-quill';
 import { FirestoreService } from 'src/app/shared/database/firestore.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-noticia-edit',
@@ -10,8 +11,7 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 })
 export class NoticiaEditComponent implements OnInit {
 
-  noticia: Observable<any> = new Observable<any>();
-  newNoticia = {
+  noticia = {
     autor: '',
     corpo: '',
     data: '',
@@ -20,14 +20,32 @@ export class NoticiaEditComponent implements OnInit {
     descricao: ''
   }
 
-  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute) { }
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getNoticia(id).subscribe(data => {
       console.log(data);
-      this.newNoticia = data;
+      delete data.id;
+      this.noticia = data;
     });
+  }
+
+  changeEditor(event: EditorChangeContent | EditorChangeSelection) {
+    this.noticia.corpo = event['editor']['root']['innerHTML'];
+  }
+
+  updateNoticia() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.firestoreService.updateNoticia(id, this.noticia).then(() => {
+      this.showSuccess();
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  showSuccess() {
+    this.toastr.success('Notícia atualizada com sucesso!', 'Sucesso!');
   }
 
 }
