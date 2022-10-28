@@ -8,40 +8,42 @@
 
       <div class="container-fluid">
         <div class="row pt-5">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <form>
 
               <div class="row">
 
-                <div class="col-md-6 position-relative mb-2">
+                <div class="col-md-6 offset-md-3">
                   <label for="validationTooltip01" class="form-label">Titulo da Noticia</label>
                   <input type="text" class="form-control" id="validationTooltip01" name="titulo" [(ngModel)]="noticia.titulo" required>
                 </div>
 
-                <div class="col-md-6 position-relative mb-2">
+                <div class="col-md-6 offset-md-3">
                   <label for="validationTooltip02" class="form-label">Autor da Noticia</label>
                   <input type="text" class="form-control" id="validationTooltip02" name="titulo" [(ngModel)]="noticia.autor" required>
                 </div>
 
-              </div>
+                <div class="col-md-6 offset-md-3">
+                  <label for="validationTooltip03" class="form-label">Descrição</label>
+                  <textarea class="form-control" id="validationTooltip03" aria-label="With textarea" [(ngModel)]="noticia.descricao"></textarea>
+                </div>
 
-              <div class="col-md-12 position-relative mb-2">
-                <label for="validationTooltip03" class="form-label">Descrição</label>
-                <textarea class="form-control" id="validationTooltip03" aria-label="With textarea"></textarea>
-              </div>
+                <div class="col-md-6 offset-md-3">
+                  <label for="imagem" class="form-label">Foto de Capa</label>
+                  <input class="form-control" type="file" id="imagem">
+                </div>
 
-              <div class="mb-3">
-                <label for="imagem" class="form-label">Foto de Capa</label>
-                <input class="form-control" type="file" id="imagem">
-              </div>
+                <div class="col-md-6 offset-md-3">
+                  <label for="editor"><h3>Editor</h3></label>
+                  <quill-editor (onEditorChanged)="changeEditor($event)"></quill-editor>
+                </div>
 
-              <div class="form-group">
-                <label for="editor"><h3>Editor</h3></label>
-                <quill-editor (onEditorChanged)="changeEditor($event)"></quill-editor>
-              </div>
+                <div class="col-md-6 offset-md-3 mt-2 btn-group">
+                  <button class="btn btn-primary float-end" (click)="onSubmit($event)">Enviar</button>
+                  <button class="btn btn-secondary float-end" routerLink="/admin/dashboard">Voltar</button>
+                </div>
 
-              <button class="btn btn-primary float-end m-2" (click)="onSubmit($event)">Enviar</button>
-              <button class="btn btn-secondary float-end m-2" [routerLink]="['/admin/dashboard']">Voltar</button>
+              </div>
 
             </form>
           </div>
