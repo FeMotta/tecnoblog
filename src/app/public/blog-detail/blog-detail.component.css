@@ -1,0 +1,34 @@
+.titulo {
+  font-size: 2.5em;
+  font-weight: 600;
+  text-align: center;
+  color: rgb(217, 217, 217);
+  margin-bottom: 0.2em;
+}
+
+.descricao {
+  font-size: 1em;
+  text-align: center;
+  color: rgb(217, 217, 217);
+  margin-bottom: 1em;
+}
+
+.toast-top-center {
+  bottom: 0;
+  margin: 0 auto;
+  right: 0;
+  left: 0;
+  width: 100%;
+}
+
+.botao {
+  background-color: transparent;
+  font-size: 0.8em;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.content > img {
+  width: 100%;
+}
