@@ -51,7 +51,7 @@ export class NoticiaComponent implements OnInit {
           this.noticiaCriada();
           setTimeout(() => {
             this.router.navigate(['/admin/dashboard']);
-          }, 2000);
+          }, 500);
         });
       });
     });
