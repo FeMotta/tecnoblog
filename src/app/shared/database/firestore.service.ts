@@ -21,7 +21,7 @@ export class FirestoreService {
   }
 
   getNoticias() {
-    return this.db.collection('noticias').snapshotChanges().pipe(
+    return this.db.collection('noticias', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -31,7 +31,19 @@ export class FirestoreService {
   }
 
   getNoticiasLimit(limit: number) {
-    return this.db.collection('noticias', ref => ref.orderBy('data', 'desc').limit(limit)).snapshotChanges().pipe(
+    return this.db.collection('noticias', ref => ref.orderBy('timestamp', 'desc').limit(limit)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
+  getNoticiasHoje() {
+    const hoje = new Date();
+    const dataHoje = hoje.getDate() + '/' + (hoje.getMonth() + 1) + '/' + hoje.getFullYear();
+    return this.db.collection('noticias', ref => ref.where('data', '==', dataHoje)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -71,7 +83,6 @@ export class FirestoreService {
     );
   }
 
-  // pegar comentarios do usuario
   getComentariosUser(id: any, uid: any) {
     return this.db.collection('noticias').doc(id).collection('comentarios', ref => ref.where('uid', '==', uid)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
