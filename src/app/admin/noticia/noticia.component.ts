@@ -18,13 +18,22 @@ export class NoticiaComponent implements OnInit {
     autor: '',
     descricao: '',
     corpo: '',
-    imagem: ''
+    imagem: '',
+    timestamp: new Date().getTime()
   }
 
   constructor(private firestoreService: FirestoreService, private router: Router, private storageService: StorageService, private toastr: ToastrService ) { }
 
   ngOnInit(): void {
     this.noticia.data = new Date().toLocaleDateString();
+  }
+
+  imagemSelecionada(event: any) {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.noticia.imagem = event.target.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   changeEditor(event: EditorChangeContent | EditorChangeSelection) {

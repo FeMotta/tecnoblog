@@ -23,18 +23,23 @@
                   <input type="text" class="form-control" id="validationTooltip02" name="titulo" [(ngModel)]="noticia.autor" required>
                 </div>
 
-                <div class="col-md-6 offset-md-3">
+                <div class="col-md-6 offset-md-3 mb-3">
                   <label for="validationTooltip03" class="form-label">Descrição</label>
-                  <textarea class="form-control" id="validationTooltip03" aria-label="With textarea" [(ngModel)]="noticia.descricao"></textarea>
+                  <textarea class="form-control" id="validationTooltip03" aria-label="With textarea" name="descricao" [(ngModel)]="noticia.descricao"></textarea>
                 </div>
 
                 <div class="col-md-6 offset-md-3">
-                  <label for="imagem" class="form-label">Foto de Capa</label>
-                  <input class="form-control" type="file" id="imagem">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Capa Noticia</h5>
+                      <input class="form-control" type="file" id="imagem" (change)="imagemSelecionada($event)">
+                    </div>
+                    <img *ngIf="noticia.imagem" [src]="noticia.imagem" alt="Imagem da Noticia" class="img-fluid ">
+                  </div><!-- End Card with an image on top -->
                 </div>
 
                 <div class="col-md-6 offset-md-3">
-                  <label for="editor"><h3>Editor</h3></label>
+                  <label for="editor" class="form-label">Editor</label>
                   <quill-editor (onEditorChanged)="changeEditor($event)"></quill-editor>
                 </div>
 
