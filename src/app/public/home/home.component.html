@@ -1,5 +1,5 @@
-<body>
-  <app-header></app-header>
+<body [ngClass]="mobileNav ? 'mobile-nav-active' : '' ">
+  <app-header (navBarClicked)="toggleNavbar()"></app-header>
 
   <section id="hero" class="hero">
 
@@ -75,6 +75,10 @@
               </div>
 
             </div>
+          </div>
+
+          <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="100">
+            <a href="/blog" class="btn btn-warning" style="color: white;">Ver mais</a>
           </div>
 
         </div>
