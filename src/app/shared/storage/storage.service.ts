@@ -11,4 +11,12 @@ export class StorageService {
   uploadImage(image: any, path: string) {
     return this.storage.upload(path, image);
   }
+
+  updateImage(image: any, path: string) {
+    return this.storage.ref(path).put(image);
+  }
+
+  getImage(path: string) {
+    return this.storage.ref(path).getDownloadURL();
+  }
 }
