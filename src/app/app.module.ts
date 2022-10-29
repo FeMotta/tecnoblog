@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { PublicModule } from './public/public.module';
 import { AdminModule } from './admin/admin.module';
 import { SharedModule } from './shared/shared.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SharedModule } from './shared/shared.module';
     AngularFireStorageModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxSpinnerModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
