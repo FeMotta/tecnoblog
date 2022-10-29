@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
 
   mobileNav = false;
   noticias: Observable<any> = new Observable<any>();
+  curtidas: any[] = []
 
   constructor(private firestoreService: FirestoreService, private spinner: NgxSpinnerService) { }
 
