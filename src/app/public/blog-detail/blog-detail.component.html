@@ -1,8 +1,12 @@
-<body>
-  <app-header></app-header>
+
+<app-header></app-header>
 
   <main id="main" *ngIf="newNoticia">
 
+    <ngx-spinner type="line-scale-party"
+      bdColor="rgba(255,255,255,0.5)"
+      template="<iframe src='https://giphy.com/embed/l3nWhI38IWDofyDrW' width='480' height='480' frameBorder='0' class='giphy-embed' allowFullScreen></iframe>">
+    </ngx-spinner>
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs d-flex align-items-center"  style="background-image: url({{newNoticia.imagem}});">
       <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
@@ -11,7 +15,6 @@
         <ol>
           <li class="descricao">{{ newNoticia.descricao }}</li>
         </ol>
-
       </div>
     </div><!-- End Breadcrumbs -->
 
@@ -35,7 +38,7 @@
                 <ul>
                   <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{ newNoticia.autor }}</li>
                   <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="2020-01-01">{{ newNoticia.data }}</time></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-heart"></i>Likes: {{ numeroCurtidas }}</li>
+                  <li class="d-flex align-items-center"><i class="bi bi-heart"></i>Curtidas: {{ numeroCurtidas }}</li>
                 </ul>
               </div><!-- End meta top -->
 
@@ -55,24 +58,24 @@
               <h4 class="comments-count" >{{ numeroComentarios }} {{ comentarioLabel }}</h4>
 
               <div *ngFor="let comentario of newComentario | async" class="comment">
+
                 <div class="d-flex">
-                  <div class="comment-img rounded"><img [src]="comentario.foto" alt=""></div>
+                  <div class="comment-img"><img [src]="comentario.foto" class="round-image"></div>
                   <div class="container">
                     <div class="row row-cols-auto">
-                      <h5 class="col">{{ comentario.autor }}</h5>
+                      <h5>{{ comentario.autor }}</h5>
                       <button *ngIf="showExcluirComentario" class="botao col" (click)="removerComentario(comentario.id)"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <time datetime="2020-01-01">{{ comentario.data }}</time>
                     <p>{{ comentario.corpo }}</p>
                   </div>
                 </div>
+
               </div><!-- End comment #1 -->
 
               <div class="reply-form" *ngIf="show">
-
                 <h4>Envie Seu Comentario</h4>
                 <form>
-
                   <div class="row">
                     <div class="col form-group">
                       <textarea name="comment" class="form-control" placeholder="Seu Comentario" [(ngModel)]="comentario.corpo"></textarea>
@@ -80,15 +83,25 @@
                   </div>
 
                   <button type="submit" class="btn btn-primary" (click)="addComentario(newNoticia.id)">Enviar Comentario</button>
-
                 </form>
-
               </div>
 
             </div><!-- End blog comments -->
 
-            <div class="container" *ngIf="!show">
-              <button class="btn btn-danger" (click)="loginGoogle()"><i class="fa-brands fa-google-plus-g"></i> Comente & Curta</button>
+            <div class="card text-center" *ngIf="!show">
+              <div class="card-header">
+                Registre-se para comentar e curtir
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Login com Google ou Github</h5>
+                <div class="">
+                  <button class="btn btn-danger m-1" (click)="loginGoogle()"><i class="fa-brands fa-google-plus-g"></i> Google</button>
+                  <button class="btn btn-dark m-1" (click)="loginGithub()" ><i class="fa-brands fa-github"></i> Github</button>
+                </div>
+              </div>
+              <div class="card-footer text-muted">
+                <br>
+              </div>
             </div>
 
           </div>
@@ -105,7 +118,7 @@
                   <div *ngFor="let noticia of noticias | async" class="post-item mt-3">
                     <img [src]="noticia.imagem">
                     <div>
-                      <h4><a [routerLink]="['/blog', noticia.id]">{{ noticia.titulo }}</a></h4>
+                      <h4><a [routerLink]="['/blog', noticia.id]" (click)="refresh()">{{ noticia.titulo }}</a></h4>
                       <time datetime="2020-01-01">{{ noticia.data }}</time>
                     </div>
                   </div><!-- End recent post item-->
@@ -124,6 +137,5 @@
 
   </main><!-- End #main -->
 
-  <app-footer></app-footer>
+<app-footer></app-footer>
 
-</body>

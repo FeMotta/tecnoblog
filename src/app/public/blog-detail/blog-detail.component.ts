@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirestoreService } from 'src/app/shared/database/firestore.service';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-blog-detail',
@@ -43,7 +44,7 @@ export class BlogDetailComponent implements OnInit {
   comentarioLabel: string = 'Comentários';
   noticias: Observable<any> = new Observable<any>();
 
-  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private auth: AuthService, private toastr: ToastrService) { }
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private auth: AuthService, private toastr: ToastrService, router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -105,6 +106,10 @@ export class BlogDetailComponent implements OnInit {
     this.auth.loginWithGoogle();
   }
 
+  loginGithub() {
+    this.auth.loginWithGithub();
+  }
+
   isLogged() {
     this.auth.isLogged().subscribe(data => {
       if (data) {
@@ -160,6 +165,30 @@ export class BlogDetailComponent implements OnInit {
         });
       }
     })
+  }
+
+  pegaCurtidas(id: any) {
+    this.firestoreService.getCurtidas(id).subscribe(data => {
+      this.numeroCurtidas = data.length;
+    });
+  }
+
+  refresh(): void {
+    setTimeout(() => {
+      this.spinner.show();
+      console.log('reload 1');
+      const id = this.route.snapshot.paramMap.get('id');
+      this.getNoticia(id);
+      this.getComentario(id);
+      this.isLogged();
+      this.verificarExcluirComentario();
+      this.verificarCurtida(id);
+      this.pegaCurtidas(id);
+      setTimeout(() => {
+        console.log('reload 2');
+        this.spinner.hide();
+      }, 500);
+    }, 500);
   }
 
 }

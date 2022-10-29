@@ -29,6 +29,10 @@
   cursor: pointer;
 }
 
+.round-image {
+  border-radius: 100%;
+}
+
 .content > img {
   width: 100%;
 }
