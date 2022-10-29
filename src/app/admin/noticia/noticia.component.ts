@@ -66,7 +66,7 @@ export class NoticiaComponent implements OnInit {
   checkUser() {
     this.auth.isLogged().subscribe(user => {
       if (user) {
-        user.email == 'fernandosantosmotta@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
+        user.email == 'fernandosantosmotta@gmail.com' ? true : this.router.navigate(['/'])
       }
     })
   }

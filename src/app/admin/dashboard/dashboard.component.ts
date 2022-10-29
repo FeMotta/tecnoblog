@@ -5,6 +5,7 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
   noticias: Observable<any> = new Observable<any>();
   noticiasHoje: Observable<any> = new Observable<any>();
 
-  constructor(private firestoreService: FirestoreService, private toastr: ToastrService, private auth: AuthService, private router: Router) { }
+  constructor(private firestoreService: FirestoreService, private toastr: ToastrService, private auth: AuthService, private router: Router, private storageService: StorageService) { }
 
   ngOnInit(): void {
     this.checkUser()
@@ -27,6 +28,9 @@ export class DashboardComponent implements OnInit {
 
   deleta(id: string) {
     this.firestoreService.deleteNoticia(id);
+    this.firestoreService.getNoticia(id).subscribe(noticia => {
+      this.storageService.deleteImage(`noticias/${noticia.titulo}`);
+    }).unsubscribe();
     this.noticiaDeletada();
   }
 
