@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
 
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
