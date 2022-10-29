@@ -4,6 +4,7 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-noticia',
@@ -22,10 +23,11 @@ export class NoticiaComponent implements OnInit {
     timestamp: new Date().getTime()
   }
 
-  constructor(private firestoreService: FirestoreService, private router: Router, private storageService: StorageService, private toastr: ToastrService ) { }
+  constructor(private firestoreService: FirestoreService, private router: Router, private storageService: StorageService, private toastr: ToastrService, private auth: AuthService ) { }
 
   ngOnInit(): void {
     this.noticia.data = new Date().toLocaleDateString();
+    this.checkUser()
   }
 
   imagemSelecionada(event: any) {
@@ -59,6 +61,14 @@ export class NoticiaComponent implements OnInit {
 
   noticiaCriada() {
     this.toastr.success('Notícia criada com sucesso!', 'Sucesso!');
+  }
+
+  checkUser() {
+    this.auth.isLogged().subscribe(user => {
+      if (user) {
+        user.email == 'fernandosantosmotta@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
+      }
+    })
   }
 
 }

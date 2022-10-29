@@ -4,6 +4,7 @@ import { EditorChangeContent, EditorChangeSelection, QuillViewComponent } from '
 import { FirestoreService } from 'src/app/shared/database/firestore.service';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-noticia-edit',
@@ -23,12 +24,13 @@ export class NoticiaEditComponent implements OnInit {
 
   @ViewChild('imageFile', { static: false }) imageFile: File | null = null;
 
-  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private toastr: ToastrService, private storageService: StorageService, private router: Router) { }
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private toastr: ToastrService, private storageService: StorageService, private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNoticia(id);
     this.getImagem();
+    this.checkUser();
   }
 
   getNoticia(id: any) {
@@ -95,6 +97,14 @@ export class NoticiaEditComponent implements OnInit {
 
   toastrSuccess() {
     this.toastr.success('Notícia atualizada com sucesso!', 'Sucesso!');
+  }
+
+  checkUser() {
+    this.auth.isLogged().subscribe(user => {
+      if (user) {
+        user.email == 'fernandosantosmotta@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
+      }
+    })
   }
 
 }

@@ -19,9 +19,10 @@ export class DashboardComponent implements OnInit {
   constructor(private firestoreService: FirestoreService, private toastr: ToastrService, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.checkUser()
     this.noticias = this.firestoreService.getNoticias();
     this.noticiasHoje = this.firestoreService.getNoticiasHoje();
-    this.auth.isAdmin().subscribe
+    this.checkUser()
   }
 
   deleta(id: string) {
@@ -31,6 +32,14 @@ export class DashboardComponent implements OnInit {
 
   noticiaDeletada() {
     this.toastr.error('Notícia deletada com sucesso!', 'Removido!');
+  }
+
+  checkUser() {
+    this.auth.isLogged().subscribe(user => {
+      if (user) {
+        user.email == 'fernandosantosmotta@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
+      }
+    })
   }
 
 }
