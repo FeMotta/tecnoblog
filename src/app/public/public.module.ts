@@ -7,6 +7,7 @@ import { BlogComponent } from './blog/blog.component';
 import { SobreComponent } from './sobre/sobre.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { RouterModule } from '@angular/router';
+import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     SharedModule,
+    NgxSpinnerModule,
     RouterModule.forChild([
       { path: 'home', component: HomeComponent },
       { path: 'blog', component: BlogComponent },
