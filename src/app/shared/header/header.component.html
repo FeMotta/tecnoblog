@@ -1,4 +1,3 @@
-
 <header id="header" class="header d-flex align-items-center">
   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
@@ -6,10 +5,10 @@
       <h1>TecnoBlog<span>.</span></h1>
     </a>
 
-    <i class="mobile-nav-toggle mobile-nav-show bi bi-list" (click)="toggleNavbar()" [ngClass]="toggleNav ? 'd-done' : ''"></i>
+    <i *ngIf="!toggleNav" class="mobile-nav-toggle mobile-nav-show bi bi-list" (click)="toggleNavbar()" [ngClass]="toggleNav ? 'd-done' : ''"></i>
     <i *ngIf="toggleNav" class="mobile-nav-toggle mobile-nav-hide bi bi-x" (click)="toggleNavbar()" [ngClass]="toggleNav ? '' : 'd-done'"></i>
-    <nav id="navbar" class="navbar">
-      <ul>
+    <nav id="navbar" class="navbar" [ngClass]="toggleNav ? '': 'nav-hidden' ">
+      <ul class="min-nav-heigth">
         <li><a href="/home" id="home" [ngClass]="{'active': windowLocation == '/home'}">Home</a></li>
         <li><a href="/sobre" id="about" [ngClass]="{'active': windowLocation == '/sobre'}">Sobre Nós</a></li>
         <li><a href="/blog" id="blog" [ngClass]="{'active': windowLocation == '/blog'}">Blog</a></li>
@@ -19,5 +18,3 @@
 
   </div>
 </header>
-
-

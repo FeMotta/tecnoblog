@@ -1,0 +1,8 @@
+
+.nav-hidden {
+  display: none;
+}
+
+.min-nav-heigth {
+  min-height: fit-content
+}
