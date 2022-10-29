@@ -21,15 +21,27 @@ export class NoticiaEditComponent implements OnInit {
     descricao: ''
   }
 
+  @ViewChild('imageFile', { static: false }) imageFile: File | null = null;
 
   constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private toastr: ToastrService, private storageService: StorageService, private router: Router) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.getNoticia(id);
+    this.getImagem();
+  }
+
+  getNoticia(id: any) {
     this.firestoreService.getNoticia(id).subscribe(data => {
       delete data.id;
       this.noticia = data;
-      this.noticia.corpo = data.corpo
+      this.noticia.corpo = data.corpo;
+    });
+  }
+
+  getImagem() {
+    this.storageService.getImage('noticias/' + this.noticia.titulo).subscribe(data => {
+      this.noticia.imagem = data;
     });
   }
 
@@ -48,25 +60,40 @@ export class NoticiaEditComponent implements OnInit {
     this.noticia.corpo = event['editor']['root']['innerHTML'];
   }
 
-
   onSubmit(event: any) {
     event.preventDefault();
     const id = this.route.snapshot.paramMap.get('id');
     const path = `noticias/${this.noticia.titulo}`;
-    const ref = this.storageService.uploadImage(event.target.form[3].files[0], path);
-    ref.then((uploadTask) => {
-      uploadTask.ref.getDownloadURL().then((downloadURL) => {
-        this.noticia.imagem = downloadURL;
-        this.firestoreService.updateNoticia(id, this.noticia).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/admin/dashboard']);
-          }, 2000);
+    if (event.target.form[3].files[0] != null) {
+      console.log('Bloco 1');
+      const ref = this.storageService.uploadImage(event.target.form[3].files[0], path);
+      this.storageService.deleteImage('noticias/' + this.noticia.titulo);
+      ref.then(() => {
+        this.storageService.updateImage(event.target.form[3].files[0], path).then(() => {
+          this.firestoreService.updateNoticia(id, this.noticia).then(() => {
+            this.toastrSuccess();
+          }).catch(error => {
+            this.toastrError(error);
+          });
+          this.router.navigate(['/admin/dashboard']);
         });
       });
-    });
+    } else {
+      this.firestoreService.updateNoticia(id, this.noticia).then(() => {
+        console.log('Bloco 2');
+        this.toastr.success('Notícia atualizada com sucesso!', 'Sucesso!');
+        this.router.navigate(['/admin/dashboard']);
+      }).catch(error => {
+        this.toastrError(error);
+      });
+    }
   }
 
-  showSuccess() {
+  toastrError(error: any) {
+    this.toastr.error('Erro ao atualizar notícia!' + error, 'Erro!');
+  }
+
+  toastrSuccess() {
     this.toastr.success('Notícia atualizada com sucesso!', 'Sucesso!');
   }
 

@@ -19,4 +19,9 @@ export class StorageService {
   getImage(path: string) {
     return this.storage.ref(path).getDownloadURL();
   }
+
+  deleteImage(path: string) {
+    return this.storage.ref(path).delete();
+  }
+
 }
