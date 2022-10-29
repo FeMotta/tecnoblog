@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from 'src/app/shared/database/firestore.service';
 
 @Component({
   selector: 'app-sobre',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SobreComponent implements OnInit {
 
-  constructor() { }
+  constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
+
   }
 
 }
