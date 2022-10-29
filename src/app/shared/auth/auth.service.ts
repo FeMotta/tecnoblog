@@ -40,16 +40,6 @@ export class AuthService {
     })
   }
 
-  isAdmin() {
-    return this.auth.user.pipe(map(user => {
-      if (user?.email == 'admin@email.com' || 'fernandosantosmotta@gmail.com') {
-        this.router.navigate(['/admin/dashboard'])
-      } else {
-        this.router.navigate(['/'])
-      }
-    }))
-  }
-
   loginWithGithub() {
     this.auth.signInWithPopup(new GithubAuthProvider())
       .then((user) => {
