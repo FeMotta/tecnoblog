@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -6,18 +6,24 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnChanges {
 
   windowLocation = window.location.pathname;
   logado = false
+  @Input() toggleNav = false;
+
+  @Output() navBarClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private authService: AuthService) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.isLogged();
   }
 
-  // verifica se o usuario esta logado
   isLogged() {
     this.authService.isLogged().subscribe(data => {
       if (data) {
@@ -30,6 +36,11 @@ export class HeaderComponent implements OnInit {
 
   deslogar() {
     this.authService.logout();
+  }
+
+  toggleNavbar(): void {
+    this.toggleNav = !this.toggleNav;
+    this.navBarClicked.emit(this.toggleNav);
   }
 
 }
