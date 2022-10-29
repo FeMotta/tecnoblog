@@ -10,6 +10,7 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 })
 export class BlogComponent implements OnInit {
 
+  mobileNav = false;
   noticias: Observable<any> = new Observable<any>();
 
   constructor(private firestoreService: FirestoreService, private spinner: NgxSpinnerService) { }
@@ -20,6 +21,10 @@ export class BlogComponent implements OnInit {
     this.noticias.subscribe(() => {
       this.spinner.hide();
     })
+  }
+
+  toggleNavbar(): void {
+    this.mobileNav = !this.mobileNav;
   }
 
 }

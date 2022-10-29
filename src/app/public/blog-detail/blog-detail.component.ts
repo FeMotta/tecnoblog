@@ -35,6 +35,7 @@ export class BlogDetailComponent implements OnInit {
     uid: ''
   }
 
+  mobileNav = false;
   numeroComentarios: number = 0;
   numeroCurtidas: any;
   show = false;
@@ -63,6 +64,10 @@ export class BlogDetailComponent implements OnInit {
         this.comentario.foto = data.photoURL || '';
       }
     })
+  }
+
+  toggleNavbar(): void {
+    this.mobileNav = !this.mobileNav;
   }
 
   getNoticia(id: any) {

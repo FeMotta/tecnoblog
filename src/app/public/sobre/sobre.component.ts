@@ -8,10 +8,16 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 })
 export class SobreComponent implements OnInit {
 
+  mobileNav = false;
+
   constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
 
+  }
+
+  toggleNavbar(): void {
+    this.mobileNav = !this.mobileNav;
   }
 
 }

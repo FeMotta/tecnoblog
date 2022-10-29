@@ -1,5 +1,5 @@
-<body>
-  <app-header></app-header>
+<body [ngClass]="mobileNav ? 'mobile-nav-active' : ''">
+  <app-header (navBarClicked)="toggleNavbar()"></app-header>
 
   <main id="main">
 
