@@ -27,15 +27,17 @@ export class DashboardComponent implements OnInit {
   }
 
   deleta(id: string) {
-    this.firestoreService.deleteNoticia(id);
     this.firestoreService.getNoticia(id).subscribe(noticia => {
-      this.storageService.deleteImage(`noticias/${noticia.titulo}`);
-    }).unsubscribe();
-    this.noticiaDeletada();
-  }
-
-  noticiaDeletada() {
-    this.toastr.error('Notícia deletada com sucesso!', 'Removido!');
+      if (noticia.titulo != undefined) {
+        this.storageService.deleteImage(`noticias/${noticia.titulo}`)
+        this.firestoreService.deleteNoticia(id).then(() => {
+          this.toastr.success('Notícia deletada com sucesso!', 'Sucesso!');
+        }).catch((error) => {
+          this.toastr.error('Erro ao deletar notícia!', 'Erro!');
+          console.error(error);
+        })
+      }
+    })
   }
 
   checkUser() {
