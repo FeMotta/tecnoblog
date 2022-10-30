@@ -182,7 +182,6 @@ export class BlogDetailComponent implements OnInit {
   refresh(): void {
     setTimeout(() => {
       this.spinner.show();
-      console.log('reload 1');
       const id = this.route.snapshot.paramMap.get('id');
       this.getNoticia(id);
       this.getComentario(id);
@@ -191,7 +190,6 @@ export class BlogDetailComponent implements OnInit {
       this.verificarCurtida(id);
       this.pegaCurtidas(id);
       setTimeout(() => {
-        console.log('reload 2');
         this.spinner.hide();
       }, 500);
     }, 500);

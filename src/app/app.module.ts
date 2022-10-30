@@ -25,7 +25,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PublicModule,
     AdminModule,
     SharedModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence({
+      synchronizeTabs: true
+    }),
     AngularFireStorageModule,
     BrowserAnimationsModule,
     AngularFireAnalyticsModule,
