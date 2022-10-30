@@ -4,53 +4,59 @@
 
   <main id="main" class="main mt-0" style="height: 100vh">
 
-    <div class="container-fluid">
-      <div class="row pt-5">
-        <div class="col-md-12">
-          <form>
+    <section class="section dashboard">
 
-            <div class="row">
+      <div class="container-fluid">
+        <div class="row pt-5">
+          <div class="col-md-12">
+            <form>
 
-              <div class="col-md-6 offset-md-3">
-                <label for="validationTooltip01" class="form-label">Titulo da Noticia</label>
-                <input type="text" class="form-control" id="validationTooltip01" name="titulo" [(ngModel)]="noticia.titulo" required>
+              <div class="row">
+
+                <div class="col-md-6 offset-md-3">
+                  <label for="validationTooltip01" class="form-label">Titulo da Noticia</label>
+                  <input type="text" class="form-control" id="validationTooltip01" name="titulo" [(ngModel)]="noticia.titulo" required>
+                </div>
+
+                <div class="col-md-6 offset-md-3">
+                  <label for="validationTooltip02" class="form-label">Autor da Noticia</label>
+                  <input type="text" class="form-control" id="validationTooltip02" name="autor" [(ngModel)]="noticia.autor" required>
+                </div>
+
+                <div class="col-md-6 offset-md-3 mb-3">
+                  <label for="validationTooltip03" class="form-label">Descrição</label>
+                  <textarea class="form-control" id="validationTooltip03" aria-label="With textarea" name="descricao" [(ngModel)]="noticia.descricao"></textarea>
+                </div>
+
+                <div class="col-md-6 offset-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Capa Noticia (1000x660)*</h5>
+                      <input class="form-control" type="file" id="imagem" (change)="imagemSelecionada($event)">
+                    </div>
+                    <img *ngIf="noticia.imagem" [src]="noticia.imagem" alt="Imagem da Noticia" class="img-fluid ">
+                  </div><!-- End Card with an image on top -->
+                </div>
+
+                <div class="col-md-6 offset-md-3 mt-2">
+                  <label for="editor" class="form-label">Editor</label>
+                  <quill-editor (onEditorChanged)="changeEditor($event)"></quill-editor>
+                </div>
+
+                <div class="col-md-6 offset-md-3 mt-2 mb-2 btn-group">
+                  <button class="btn btn-primary float-end" (click)="onSubmit($event)">Enviar</button>
+                  <button class="btn btn-secondary float-end" routerLink="/admin/dashboard">Voltar</button>
+                </div>
+
               </div>
 
-              <div class="col-md-6 offset-md-3">
-                <label for="validationTooltip02" class="form-label">Autor da Noticia</label>
-                <input type="text" class="form-control" id="validationTooltip02" name="autor" [(ngModel)]="noticia.autor" required>
-              </div>
-
-              <div class="col-md-6 offset-md-3">
-                <label for="validationTooltip03" class="form-label">Descrição</label>
-                <textarea class="form-control" id="validationTooltip03" aria-label="With textarea" name="descricao" [(ngModel)]="noticia.descricao"></textarea>
-              </div>
-
-              <div class="col-md-6 offset-md-3">
-                <label for="imagem" class="form-label">Foto de Capa</label>
-                <input #imageFile class="form-control" type="file" id="imagem" (change)="imagemSelecionada($event)">
-              </div>
-
-              <div class="col-md-6 offset-md-3" *ngIf="noticia.imagem">
-                <img [src]="noticia.imagem" alt="Imagem da Noticia" class="img-fluid">
-              </div>
-
-              <div class="col-md-6 offset-md-3 mt-2">
-                <label for="editor" class="form-label">Editor</label>
-                <quill-editor (onEditorChanged)="changeEditor($event)"></quill-editor>
-              </div>
-
-              <div class="col-md-6 offset-md-3 mt-2 mb-2 btn-group">
-                <button class="btn btn-primary float-end" (click)="onSubmit($event)">Enviar</button>
-                <button class="btn btn-secondary float-end" routerLink="/admin/dashboard">Voltar</button>
-              </div>
-
-            </div>
-
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+
+    </section>
+
 
   </main><!-- End #main -->
 
