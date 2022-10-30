@@ -17,6 +17,16 @@ export class FirestoreService {
   }
 
   deleteNoticia(id: string) {
+    this.db.collection('noticias').doc(id).collection('comentarios').get().subscribe((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        doc.ref.delete();
+      });
+    });
+    this.db.collection('noticias').doc(id).collection('curtidas').get().subscribe((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        doc.ref.delete();
+      });
+    });
     return this.db.collection('noticias').doc(id).delete();
   }
 
@@ -73,7 +83,7 @@ export class FirestoreService {
   }
 
   getComentarios(id: any) {
-    return this.db.collection('noticias').doc(id).collection('comentarios').snapshotChanges().pipe(
+    return this.db.collection('noticias').doc(id).collection('comentarios', ref => ref.orderBy('data', 'asc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
