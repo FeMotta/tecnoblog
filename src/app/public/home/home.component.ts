@@ -11,23 +11,25 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 export class HomeComponent implements OnInit {
 
   mobileNav = false;
+  spinnerClose = false;
   noticias: Observable<any> = new Observable<any>();
 
   constructor(private firestoreService: FirestoreService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.show();
-    this.noticias = this.firestoreService.getNoticiasLimit(3);
-    this.closeSpinner();
+    this.getNoticias();
   }
 
   toggleNavbar(): void {
     this.mobileNav = !this.mobileNav;
   }
 
-  closeSpinner(): void {
+  getNoticias() {
+    this.noticias = this.firestoreService.getNoticiasLimit(3);
     this.noticias.subscribe(() => {
       this.spinner.hide();
+      this.spinnerClose = true;
     })
   }
 

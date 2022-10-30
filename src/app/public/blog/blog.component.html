@@ -20,13 +20,16 @@
     <section id="blog" class="blog">
 
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100" >
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <ngx-spinner type="line-scale-party"
+          bdColor="rgba(0,0,0,0.0)"
+          size="medium"
+          color="#f4696b"
+          type="ball-scale-multiple">
+          </ngx-spinner>
 
         <div class="row gy-4 posts-list" style="min-height: 50vh;">
-          <ngx-spinner type="line-scale-party"
-            bdColor="#fff"
-            template="<iframe src='https://giphy.com/embed/l3nWhI38IWDofyDrW' width='480' height='480' frameBorder='0' class='giphy-embed' allowFullScreen></iframe>">
-          </ngx-spinner>
 
           <div class="col-xl-4 col-md-6" *ngFor="let noticia of noticias | async">
             <div class="post-item position-relative h-100">

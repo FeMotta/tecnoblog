@@ -5,9 +5,12 @@
     <main id="main" *ngIf="newNoticia">
 
       <ngx-spinner type="line-scale-party"
-        bdColor="rgba(255,255,255,0.5)"
-        template="<iframe src='https://giphy.com/embed/l3nWhI38IWDofyDrW' width='480' height='480' frameBorder='0' class='giphy-embed' allowFullScreen></iframe>">
+        bdColor="rgba(0,0,0,0.4)"
+        size="large"
+        color="#f4696b"
+        type="ball-scale-multiple">
       </ngx-spinner>
+
       <!-- ======= Breadcrumbs ======= -->
       <div class="breadcrumbs d-flex align-items-center"  style="background-image: url({{newNoticia.imagem}});">
         <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">

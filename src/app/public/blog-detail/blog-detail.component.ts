@@ -27,7 +27,7 @@ export class BlogDetailComponent implements OnInit {
     autor: '',
     corpo: '',
     foto: '',
-    data: new Date().toLocaleString(),
+    data: '',
     uid: ''
   }
 
@@ -91,6 +91,7 @@ export class BlogDetailComponent implements OnInit {
   }
 
   addComentario(id: any) {
+    this.comentario.data = new Date().toLocaleString();
     this.auth.isLogged().subscribe(data => {
       if (data) {
         this.comentario.uid = data.uid;

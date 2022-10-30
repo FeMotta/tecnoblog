@@ -11,12 +11,16 @@ import { FirestoreService } from 'src/app/shared/database/firestore.service';
 export class BlogComponent implements OnInit {
 
   mobileNav = false;
-  noticias: Observable<any> = new Observable<any>();
+  noticias: Observable<any[]> = new Observable<any[]>();
 
   constructor(private firestoreService: FirestoreService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.show();
+    this.getNoticas();
+  }
+
+  getNoticas() {
     this.noticias = this.firestoreService.getNoticias();
     this.noticias.subscribe(() => {
       this.spinner.hide();
