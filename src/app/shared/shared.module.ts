@@ -11,7 +11,7 @@ import { FooterComponent } from './footer/footer.component';
   declarations: [
     HeaderComponent,
     AdmMenuComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     CommonModule,

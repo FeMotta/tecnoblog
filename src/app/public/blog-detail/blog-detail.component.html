@@ -61,7 +61,7 @@
 
                 <h4 class="comments-count" >{{ numeroComentarios }} {{ comentarioLabel }}</h4>
 
-                <div *ngFor="let comentario of newComentario | async" class="comment">
+                <div *ngFor="let comentario of comentarios | async" class="comment">
 
                   <div class="d-flex">
                     <div class="comment-img"><img [src]="comentario.foto" class="round-image"></div>
@@ -101,6 +101,7 @@
                   <div class="">
                     <button class="btn btn-danger m-1" (click)="loginGoogle()"><i class="fa-brands fa-google-plus-g"></i> Google</button>
                     <button class="btn btn-dark m-1" (click)="loginGithub()" ><i class="fa-brands fa-github"></i> Github</button>
+                    <!-- <button class="btn btn-primary m-1" (click)="loginTwiter()" ><i class="fa-brands fa-twitter"></i> Twitter</button> -->
                   </div>
                 </div>
                 <div class="card-footer text-muted">

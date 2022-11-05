@@ -35,29 +35,32 @@ export class BlogDetailComponent implements OnInit {
     uid: ''
   }
 
+  comentarios: Observable<any> = new Observable<any>();
+  noticias: Observable<any> = new Observable<any>();
+
   mobileNav = false;
   numeroComentarios: number = 0;
   numeroCurtidas: any;
   show = false;
   showExcluirComentario = false;
   botaoCurtida: any;
-  newComentario: Observable<any> = new Observable<any>();
   comentarioLabel: string = 'Comentários';
-  noticias: Observable<any> = new Observable<any>();
 
   constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private auth: AuthService, private toastr: ToastrService, router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.getNoticia(id);
-    this.noticias = this.firestoreService.getNoticiasLimit(4)
-    this.getComentario(id);
+    this.getInfoCommenter();
+    this.getComentarios(id);
     this.isLogged();
     this.verificarExcluirComentario();
     this.verificarCurtida(id);
-    this.numeroCurtidas = this.firestoreService.getCurtidas(id).subscribe(data => {
-      this.numeroCurtidas = data.length;
-    });
+    this.getNumeroCurtidas(id);
+    this.noticias = this.firestoreService.getNoticiasLimit(4)
+  }
+
+  getInfoCommenter() { // <--- Pega a foto e o nome do usuário que está logado
     this.auth.isLogged().subscribe(data => {
       if (data) {
         this.comentario.autor = data.displayName || '';
@@ -66,27 +69,24 @@ export class BlogDetailComponent implements OnInit {
     })
   }
 
-  toggleNavbar(): void {
-    this.mobileNav = !this.mobileNav;
-  }
-
-  getNoticia(id: any) {
+  getNoticia(id: any) { // <--- Pega a notícia pelo id
     this.firestoreService.getNoticia(id).subscribe(data => {
-      console.log(data);
       this.newNoticia = data;
       this.newNoticia.id = id;
     });
   }
 
-  getComentario(id: any) {
-    this.newComentario = this.firestoreService.getComentarios(id);
-    this.newComentario.subscribe(data => {
+  getComentarios(id: any) { // <--- Pega os comentários da notícia
+    this.comentarios = this.firestoreService.getComentarios(id);
+    this.comentarios.subscribe(data => {
       this.numeroComentarios = data.length;
-      if (this.numeroComentarios == 1) {
-        this.comentarioLabel = 'Comentário';
-      } else {
-        this.comentarioLabel = 'Comentários';
-      }
+      this.numeroComentarios == 1 ? this.comentarioLabel = 'Comentário' : this.comentarioLabel = 'Comentários';
+    });
+  }
+
+  getNumeroCurtidas(id: any) {  // <--- Pega o número de curtidas da notícia
+    this.firestoreService.getCurtidas(id).subscribe(data => {
+      this.numeroCurtidas = data.length;
     });
   }
 
@@ -103,6 +103,11 @@ export class BlogDetailComponent implements OnInit {
     })
   }
 
+  toggleNavbar() {
+    this.mobileNav = !this.mobileNav;
+  }
+
+
   removerComentario( idComentario: any) {
     const id = this.route.snapshot.paramMap.get('id');
     this.firestoreService.deleteComentario(id, idComentario);
@@ -116,11 +121,13 @@ export class BlogDetailComponent implements OnInit {
     this.auth.loginWithGithub();
   }
 
+  loginTwiter() {
+    this.auth.loginWithTwitter();
+  }
+
   isLogged() {
     this.auth.isLogged().subscribe(data => {
-      if (data) {
-        this.show = true;
-      }
+      data ? this.show = true : this.show = false;
     })
   }
 
@@ -149,11 +156,7 @@ export class BlogDetailComponent implements OnInit {
   verificarExcluirComentario() {
     this.auth.isLogged().subscribe(data => {
       if (data) {
-        if (data.email == 'fernandosantosmotta@gmail.com') {
-          this.showExcluirComentario = true;
-        } else {
-          this.showExcluirComentario = false;
-        }
+        data.email == 'fernandosantosmotta@gmail.com' ? this.showExcluirComentario = true : this.showExcluirComentario = false;
       }
     })
   }
@@ -163,32 +166,23 @@ export class BlogDetailComponent implements OnInit {
       if (data) {
         const uid = data.uid;
         this.firestoreService.getUserCurtida(id, uid).subscribe(data => {
-          if (data.length > 0) {
-            return this.botaoCurtida = false;
-          } else {
-            return this.botaoCurtida = true;
-          }
+          data.length > 0 ? this.botaoCurtida = false : this.botaoCurtida = true;
         });
       }
     })
   }
 
-  pegaCurtidas(id: any) {
-    this.firestoreService.getCurtidas(id).subscribe(data => {
-      this.numeroCurtidas = data.length;
-    });
-  }
 
-  refresh(): void {
+  refresh() {
     setTimeout(() => {
       this.spinner.show();
       const id = this.route.snapshot.paramMap.get('id');
       this.getNoticia(id);
-      this.getComentario(id);
+      this.getComentarios(id);
       this.isLogged();
       this.verificarExcluirComentario();
       this.verificarCurtida(id);
-      this.pegaCurtidas(id);
+      this.getNumeroCurtidas(id);
       setTimeout(() => {
         this.spinner.hide();
       }, 500);

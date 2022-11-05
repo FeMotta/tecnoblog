@@ -20,8 +20,10 @@ export class NoticiaComponent implements OnInit {
     descricao: '',
     corpo: '',
     imagem: '',
-    timestamp: new Date().getTime()
+    timestamp: ''
   }
+
+  ableDelete = false;
 
   constructor(private firestoreService: FirestoreService, private router: Router, private storageService: StorageService, private toastr: ToastrService, private auth: AuthService ) { }
 
@@ -42,8 +44,9 @@ export class NoticiaComponent implements OnInit {
     this.noticia.corpo = event['editor']['root']['innerHTML'];
   }
 
-  onSubmit(event: any){
+  onSubmit(event: any) {
     event.preventDefault();
+    this.noticia.timestamp = new Date().getTime().toString();
     const path = `noticias/${this.noticia.titulo}`;
     const ref = this.storageService.uploadImage(event.target.form[3].files[0], path);
     ref.then((uploadTask) => {
@@ -65,8 +68,10 @@ export class NoticiaComponent implements OnInit {
 
   checkUser() {
     this.auth.isLogged().subscribe(user => {
-      if (user) {
-        user.email == 'fernandosantosmotta@gmail.com' ? true : this.router.navigate(['/'])
+      if (user?.email == 'fernandosantosmotta@gmail.com' || 'larabeca1215@gmail.com') {
+        this.ableDelete = true;
+      } else {
+        this.router.navigate(['/']);
       }
     })
   }

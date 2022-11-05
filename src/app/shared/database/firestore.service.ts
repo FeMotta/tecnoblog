@@ -12,11 +12,11 @@ export class FirestoreService {
 
   // <--- CRUD de Noticias --->
 
-  addNoticia(noticia: any) {
+  addNoticia(noticia: any) {  // <--- Adiciona uma noticia
     return this.db.collection('noticias').add(noticia);
   }
 
-  deleteNoticia(id: string) {
+  deleteNoticia(id: string) { // <--- Deleta uma noticia
     this.db.collection('noticias').doc(id).collection('comentarios').get().subscribe((querySnapshot) => {
       querySnapshot.docs.forEach((doc) => {
         doc.ref.delete();
@@ -30,7 +30,7 @@ export class FirestoreService {
     return this.db.collection('noticias').doc(id).delete();
   }
 
-  getNoticias() {
+  getNoticias() { // <--- Retorna todas as noticias
     return this.db.collection('noticias', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
@@ -40,7 +40,7 @@ export class FirestoreService {
     );
   }
 
-  getNoticiasLimit(limit: number) {
+  getNoticiasLimit(limit: number) { // <--- Retorna um numero limitado de noticias
     return this.db.collection('noticias', ref => ref.orderBy('timestamp', 'desc').limit(limit)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
@@ -50,7 +50,7 @@ export class FirestoreService {
     );
   }
 
-  getNoticiasHoje() {
+  getNoticiasHoje() { // <--- Retorna as noticias de hoje
     const hoje = new Date();
     const dataHoje = hoje.getDate() + '/' + (hoje.getMonth() + 1) + '/' + hoje.getFullYear();
     return this.db.collection('noticias', ref => ref.where('data', '==', dataHoje)).snapshotChanges().pipe(
@@ -62,7 +62,7 @@ export class FirestoreService {
     );
   }
 
-  getNoticia(id: any) {
+  getNoticia(id: any) { // <--- Retorna uma noticia
     return this.db.collection('noticias').doc(id).snapshotChanges().pipe(
       map(actions => {
         const data = actions.payload.data() as any;
@@ -72,17 +72,17 @@ export class FirestoreService {
     );
   }
 
-  updateNoticia(id: any, noticia: any) {
+  updateNoticia(id: any, noticia: any) { // <--- Atualiza uma noticia
     return this.db.collection('noticias').doc(id).update(noticia);
   }
 
   // <--- CRUD de Comentarios --->
 
-  addComentario(id: any, comentario: any) {
+  addComentario(id: any, comentario: any) { // <--- Adiciona um comentario
     return this.db.collection('noticias').doc(id).collection('comentarios').add(comentario)
   }
 
-  getComentarios(id: any) {
+  getComentarios(id: any) { // <--- Retorna todos os comentarios
     return this.db.collection('noticias').doc(id).collection('comentarios', ref => ref.orderBy('data', 'asc')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
@@ -93,7 +93,7 @@ export class FirestoreService {
     );
   }
 
-  getComentariosUser(id: any, uid: any) {
+  getComentarioUser(id: any, uid: any) {
     return this.db.collection('noticias').doc(id).collection('comentarios', ref => ref.where('uid', '==', uid)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
@@ -104,13 +104,13 @@ export class FirestoreService {
     );
   }
 
-  deleteComentario(id: any, idComentario: any) {
+  deleteComentario(id: any, idComentario: any) { // <--- Deleta um comentario
     return this.db.collection('noticias').doc(id).collection('comentarios').doc(idComentario).delete();
   }
 
   // <--- CRUD de Usuarios --->
 
-  addUser(id: any, email: any, displayName: any, photoURL: any) {
+  addUser(id: any, email: any, displayName: any, photoURL: any) { // <--- Adiciona um usuario
     return this.db.collection('users').doc(id).set({
       email: email,
       displayName: displayName,

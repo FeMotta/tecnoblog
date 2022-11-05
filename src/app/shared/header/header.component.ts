@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnChanges {
+export class HeaderComponent implements OnInit {
 
   windowLocation = window.location.pathname;
   logado = false
@@ -15,10 +15,6 @@ export class HeaderComponent implements OnChanges {
   @Output() navBarClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private authService: AuthService) { }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit(): void {
     this.isLogged();

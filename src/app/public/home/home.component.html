@@ -39,23 +39,20 @@
     <!-- ======= Recent Blog Posts Section ======= -->
     <section id="recent-blog-posts" class="recent-blog-posts">
 
-
       <div class="container" data-aos="fade-up" style="min-height: 50vh;">
-
 
         <div class=" section-header">
           <h3>Últimas Postagens</h3>
           <p>Confira nossas últimas noticias, sempre se mantenha informado(a)!</p>
         </div>
 
-
         <div class="row gy-5">
 
           <ngx-spinner type="line-scale-party"
-          bdColor="rgba(0,0,0,0.0)"
-          size="medium"
-          color="#f4696b"
-          type="ball-scale-multiple">
+            bdColor="rgba(0,0,0,0.0)"
+            size="medium"
+            color="#f4696b"
+            type="ball-scale-multiple">
           </ngx-spinner>
 
           <div *ngFor="let noticia of noticias | async" class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">

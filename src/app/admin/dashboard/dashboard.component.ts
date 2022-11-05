@@ -27,23 +27,30 @@ export class DashboardComponent implements OnInit {
   }
 
   deleta(id: string) {
-    this.firestoreService.getNoticia(id).subscribe(noticia => {
-      if (noticia.titulo != undefined) {
-        this.storageService.deleteImage(`noticias/${noticia.titulo}`)
-        this.firestoreService.deleteNoticia(id).then(() => {
-          this.toastr.success('Notícia deletada com sucesso!', 'Sucesso!');
-        }).catch((error) => {
-          this.toastr.error('Erro ao deletar notícia!', 'Erro!');
-          console.error(error);
-        })
-      }
-    })
+    if(confirm('Deseja realmente excluir?')) {
+      this.firestoreService.getNoticia(id).subscribe(noticia => {
+        if (noticia.titulo != undefined) {
+          this.storageService.deleteImage(`noticias/${noticia.titulo}`)
+          this.firestoreService.deleteNoticia(id).then(() => {
+            this.toastr.success('Notícia deletada com sucesso!', 'Sucesso!');
+          }).catch((error) => {
+            this.toastr.error('Erro ao deletar notícia!', 'Erro!');
+            console.error(error);
+          })
+        }
+      })
+    }
+
+
+
   }
+
+
 
   checkUser() {
     this.auth.isLogged().subscribe(user => {
       if (user) {
-        user.email == 'fernandosantosmotta@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
+        user.email == 'fernandosantosmotta@gmail.com' || 'larabeca1215@gmail.com' ? this.router.navigate(['/admin/dashboard']) : this.router.navigate(['/'])
       }
     })
   }

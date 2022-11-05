@@ -40,6 +40,21 @@ export class AuthService {
     })
   }
 
+  loginWithTwitter() {
+    this.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+      .then((user) => {
+        this.firestoreService.getUser(user.user?.uid).subscribe(data => {
+          if (data.length == 0) {
+            this.firestoreService.addUser(user.user?.uid, user.user?.email, user.user?.displayName, user.user?.photoURL).then(() => {
+              console.log('User added')
+            }).catch((error) => {
+              console.log(error)
+          })
+        }
+      })
+    })
+  }
+
   loginWithGithub() {
     this.auth.signInWithPopup(new GithubAuthProvider())
       .then((user) => {
@@ -57,6 +72,16 @@ export class AuthService {
 
   isLogged() {
     return this.auth.authState;
+  }
+
+  getUser() {
+    return this.auth.user;
+  }
+
+  getUid() {
+    return this.auth.currentUser.then(user => {
+      return user?.uid;
+    })
   }
 
   logout() {
